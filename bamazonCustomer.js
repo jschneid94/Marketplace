@@ -85,8 +85,9 @@ function makeOrder() {
             var itemQuantity = res[0].stock_quantity;
 
             if (requestedUnits > itemQuantity) {
-                console.log("Unfortunately we do not have that number of units in stock. Try putting your order through again.")
-                start();
+                console.log(`\nUnfortunately we do not have that number of units in stock. 
+                            Try putting your order through again.`)
+                displayMarket();
             } else {
                 var newQuantity = itemQuantity - requestedUnits;
                 var purchaseTotal = (requestedUnits * res[0].price).toFixed();
@@ -103,10 +104,28 @@ function makeOrder() {
 
                 connection.query(sqlString, values, function(err) {
                     if (err) throw err;
-                    console.log("Your order is complete! Here is how much you spent: " + purchaseTotal);
-                    connection.end();
+                    console.log(`\nYour order is complete! Here is how much you spent: ` + purchaseTotal + `\n`);
+                    newOrder();
                 });
             }
         });
     });
+}
+
+function newOrder() {
+    inquirer.prompt([
+        {
+            name: "newOrder",
+            type: "list",
+            message: "Would you like to make another purchase?",
+            choices: ["YES", "NO"]
+        }
+    ]).then(function(response) {
+        if (response.newOrder === "YES") {
+            displayMarket();
+        } else {
+            console.log("\nThanks for visiting! Come back soon :)\n")
+            connection.end();
+        }
+    })
 }
