@@ -23,7 +23,7 @@ function start() {
             choices: ["ORDER", "EXIT"]
         }
     ]).then(function(response){
-        if (response.startMenu === "ORDER") {
+        if (response.startMenu[0]) {
             makeOrder();
         } else {
             connection.end();
@@ -41,7 +41,7 @@ function displayMarket() {
                 divider + `\n` +
                 `Product ID: ` + res[i].item_id +
                 ` || Name: ` + res[i].product_name +
-                ` || Price: ` + res[i].price +
+                ` || Price: $` + res[i].price +
                 `\n` + divider
             );
         }
@@ -104,7 +104,7 @@ function makeOrder() {
 
                 connection.query(sqlString, values, function(err) {
                     if (err) throw err;
-                    console.log(`\nYour order is complete! Here is how much you spent: ` + purchaseTotal + `\n`);
+                    console.log(`\nYour order is complete! Your total: $` + purchaseTotal + `\n`);
                     newOrder();
                 });
             }
