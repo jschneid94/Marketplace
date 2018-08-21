@@ -36,7 +36,22 @@ function startMenu() {
 }
 
 function viewProducts() {
-
+    var divider = "================================================================================"
+    var sqlString = "SELECT item_id, product_name, price, stock_quantity FROM products";
+    connection.query(sqlString, function(err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+            console.log(
+                divider + `\n` +
+                `Product ID: ` + res[i].item_id +
+                ` || Name: ` + res[i].product_name +
+                ` || Price: $` + res[i].price +
+                ` || Quantity: ` + res[i].stock_quantity +
+                `\n` + divider
+            );
+        }
+        startMenu();
+    });
 }
 
 function lowInventory() {
@@ -48,5 +63,18 @@ function addInventory() {
 }
 
 function addProduct() {
-    
+
+}
+
+function exit() {
+    inquirer.prompt([
+        {
+            name: "exit",
+            type: "list",
+            message: "",
+            choices: ["EXIT"]
+        }
+    ]).then(function() {
+        startMenu();
+    });
 }
