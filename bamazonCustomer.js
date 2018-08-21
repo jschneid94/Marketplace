@@ -11,10 +11,45 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    start();
+    displayMarket();
 });
 
 function start() {
+    inquirer.prompt([
+        {
+            name: "startMenu",
+            type: "list",
+            message: "Welcome to the Bamazon Market!",
+            choices: ["ORDER", "EXIT"]
+        }
+    ]).then(function(response){
+        if (response.startMenu === "ORDER") {
+            makeOrder();
+        } else {
+            connection.end();
+        }
+    });
+}
+
+function displayMarket() {
+    var divider = "===================================================="
+    var sqlString = "SELECT item_id, product_name, price FROM products";
+    connection.query(sqlString, function(err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+            console.log(
+                divider + `\n` +
+                `Product ID: ` + res[i].item_id +
+                ` || Name: ` + res[i].product_name +
+                ` || Price: ` + res[i].price +
+                `\n` + divider
+            );
+        }
+        start();
+    });
+}
+
+function makeOrder() {
     var questions = [
         {
             name: "id",
@@ -55,8 +90,8 @@ function start() {
             } else {
                 var newQuantity = itemQuantity - requestedUnits;
                 var purchaseTotal = (requestedUnits * res[0].price).toFixed();
-                var sqlString = "UPDATE products SET ? WHERE ?"
 
+                var sqlString = "UPDATE products SET ? WHERE ?";
                 var values = [
                     {
                         stock_quantity: newQuantity
@@ -75,4 +110,3 @@ function start() {
         });
     });
 }
-
