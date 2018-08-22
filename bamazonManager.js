@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+require("console.table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -36,20 +37,10 @@ function startMenu() {
 }
 
 function viewProducts() {
-    var divider = "================================================================================"
     var sqlString = "SELECT item_id, product_name, price, stock_quantity FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-            console.log(
-                divider + `\n` +
-                `Product ID: ` + res[i].item_id +
-                ` || Name: ` + res[i].product_name +
-                ` || Price: $` + res[i].price +
-                ` || Quantity: ` + res[i].stock_quantity +
-                `\n` + divider
-            );
-        }
+        console.table(res);
         startMenu();
     });
 }

@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+require("console.table");
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -36,15 +37,7 @@ function displayMarket() {
     var sqlString = "SELECT item_id, product_name, price FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-            console.log(
-                divider + `\n` +
-                `Product ID: ` + res[i].item_id +
-                ` || Name: ` + res[i].product_name +
-                ` || Price: $` + res[i].price +
-                `\n` + divider
-            );
-        }
+        console.table(res);
         start();
     });
 }
@@ -90,7 +83,7 @@ function makeOrder() {
                 displayMarket();
             } else {
                 var newQuantity = itemQuantity - requestedUnits;
-                var purchaseTotal = (requestedUnits * res[0].price).toFixed();
+                var purchaseTotal = (requestedUnits * res[0].price).toFixed(2);
 
                 var sqlString = "UPDATE products SET ? WHERE ?";
                 var values = [
