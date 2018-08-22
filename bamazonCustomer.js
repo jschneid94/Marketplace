@@ -24,7 +24,7 @@ function start() {
             choices: ["ORDER", "EXIT"]
         }
     ]).then(function(response){
-        if (response.startMenu[0]) {
+        if (response.startMenu === "ORDER") {
             makeOrder();
         } else {
             connection.end();
@@ -33,7 +33,6 @@ function start() {
 }
 
 function displayMarket() {
-    var divider = "===================================================="
     var sqlString = "SELECT item_id, product_name, price FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
