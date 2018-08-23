@@ -39,7 +39,7 @@ function startMenu() {
 }
 
 function viewProducts() {
-    var sqlString = "SELECT item_id, product_name, price, stock_quantity FROM products";
+    var sqlString = "SELECT item_id AS ID, product_name AS Product, price AS Price, stock_quantity AS Quantity FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
         console.table(res);

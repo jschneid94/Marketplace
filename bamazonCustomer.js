@@ -33,7 +33,7 @@ function start() {
 }
 
 function displayMarket() {
-    var sqlString = "SELECT item_id, product_name, price FROM products";
+    var sqlString = "SELECT item_id AS Id, product_name AS Product, price AS Price FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
         console.table(res);
