@@ -83,11 +83,13 @@ function makeOrder() {
             } else {
                 var newQuantity = itemQuantity - requestedUnits;
                 var purchaseTotal = (requestedUnits * res[0].price).toFixed(2);
+                var productSalesTotal = res[0].product_sales + purchaseTotal
 
                 var sqlString = "UPDATE products SET ? WHERE ?";
                 var values = [
                     {
-                        stock_quantity: newQuantity
+                        stock_quantity: newQuantity,
+                        product_sales: productSalesTotal
                     },
                     {
                         item_id: response.id
