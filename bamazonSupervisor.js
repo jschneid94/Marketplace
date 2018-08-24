@@ -35,9 +35,16 @@ function startMenu() {
 }
 
 function viewByDepartment() {
-
+    var sqlString = "SELECT department_id AS ID, d.department_name AS Department, over_head_costs AS `Overhead Costs`,"
+    sqlString += "SUM(product_sales) AS `Product Sales`, SUM(product_sales) - over_head_costs AS `Total Profit`"     
+    sqlString += "FROM departments d INNER JOIN products p ON d.department_name = p.department_name GROUP BY department_id";
+    connection.query(sqlString, function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        startMenu();
+    });
 }
 
 function createNewDepartment() {
-    
+
 }

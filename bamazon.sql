@@ -24,5 +24,33 @@ VALUES ("Speaker", "Electronics", 49.95, 500),
     ("Firestick", "Electronics", 39.99, 1000),
     ("Mixer", "Kitchen", 79.99, 100);
 
+INSERT INTO departments (department_name, over_head_costs)
+Values ("Home & Furniture", 300),
+        ("Kitchen", 400),
+        ("Electronics", 1000),
+        ("Bathroom", 200),
+        ("Outdoor", 50),
+        ("Beauty", 80);
+
 ALTER TABLE products 
     ADD product_sales DECIMAL(15,2) DEFAULT 0;
+
+CREATE VIEW product_sales_by_department AS
+    SELECT department_id AS ID, 
+            d.department_name AS Department, 
+            over_head_costs AS `Overhead Costs`, 
+            product_sales AS `Product Sales`
+            -- (product_sales - over_head_costs) AS `Total Profit` 
+    FROM products p, departments d
+    WHERE d.department_name = p.department_name;
+
+CREATE VIEW product_sales_by_department AS
+SELECT department_id AS ID, 
+        d.department_name AS Department, 
+        over_head_costs AS `Overhead Costs`, 
+        SUM(product_sales) AS `Product Sales`,
+	    SUM(product_sales) - over_head_costs AS `Total Profit`
+FROM departments d
+INNER JOIN products p
+ON d.department_name = p.department_name
+GROUP BY department_id;
