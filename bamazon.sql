@@ -36,15 +36,6 @@ ALTER TABLE products
     ADD product_sales DECIMAL(15,2) DEFAULT 0;
 
 CREATE VIEW product_sales_by_department AS
-    SELECT department_id AS ID, 
-            d.department_name AS Department, 
-            over_head_costs AS `Overhead Costs`, 
-            product_sales AS `Product Sales`
-            -- (product_sales - over_head_costs) AS `Total Profit` 
-    FROM products p, departments d
-    WHERE d.department_name = p.department_name;
-
-CREATE VIEW product_sales_by_department AS
 SELECT department_id AS ID, 
         d.department_name AS Department, 
         over_head_costs AS `Overhead Costs`, 
