@@ -66,41 +66,59 @@ function makeOrder() {
             }
         }
     ];
-
     inquirer.prompt(questions).then(function(response) {
-        var requestedUnits = response.units;
-
-        var sqlString = "SELECT * FROM products WHERE ?"; 
-
-        connection.query(sqlString, {item_id: response.id}, function(err, res) {
-            if (err) throw err;
-            var itemQuantity = res[0].stock_quantity;
-
-            if (requestedUnits > itemQuantity) {
-                console.log(`\nUnfortunately we do not have that number of units in stock. 
-                            Try putting your order through again.`)
-                displayMarket();
-            } else {
-                var newQuantity = itemQuantity - requestedUnits;
-                var purchaseTotal = (requestedUnits * res[0].price).toFixed(2);
-                var productSalesTotal = parseInt(res[0].product_sales) + parseInt(purchaseTotal)
-
-                var sqlString = "UPDATE products SET ? WHERE ?";
-                var values = [
-                    {
-                        stock_quantity: newQuantity,
-                        product_sales: productSalesTotal
-                    },
-                    {
-                        item_id: response.id
-                    }
-                ]
-
-                connection.query(sqlString, values, function(err) {
+        console.table(response);
+        // Confirm order before submitting
+        var confirm = [
+            {
+                name: "confirm",
+                type: "list",
+                message: "Does your order look correct?",
+                choices: ["YES", "NO"]
+            }
+        ];
+        inquirer.prompt(confirm).then(function(answer) {
+            if (answer.confirm === "YES") {
+                var requestedUnits = response.units;
+                var sqlString = "SELECT * FROM products WHERE ?"; 
+                connection.query(sqlString, {item_id: response.id}, function(err, res) {
                     if (err) throw err;
-                    console.log(`\nYour order is complete! Your total: $` + purchaseTotal + `\n`);
-                    newOrder();
+                    var itemQuantity = res[0].stock_quantity;
+
+                    // If there are not enough items in stock, start the order over
+                    if (requestedUnits > itemQuantity) {
+                        console.log(`\nUnfortunately we do not have that number of units in stock. 
+                                    Try putting your order through again.`)
+                        makeOrder();
+                    } 
+                    // If there are enough items in stock, push the order through
+                    else {
+                        var newQuantity = itemQuantity - requestedUnits;
+                        var purchaseTotal = (requestedUnits * res[0].price).toFixed(2);
+                        var productSalesTotal = parseInt(res[0].product_sales) + parseInt(purchaseTotal)
+                        var sqlString = "UPDATE products SET ? WHERE ?";
+                        var values = [
+                            {
+                                // Quantity is lowered and the product's sales total is increased
+                                stock_quantity: newQuantity,
+                                product_sales: productSalesTotal
+                            },
+                            {
+                                item_id: response.id
+                            }
+                        ];
+                        connection.query(sqlString, values, function(err) {
+                            if (err) throw err;
+                            console.log(`\nYour order is complete! Your total: $` + purchaseTotal + `\n`);
+                            newOrder();
+                        });
+                    }
                 });
+            } 
+            // If the order is not correct, let user start the order over.
+            else {
+                console.log(`\nPlease make your order again.\n`)
+                makeOrder();
             }
         });
     });
