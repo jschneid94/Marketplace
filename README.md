@@ -45,7 +45,7 @@ The customer facing version of this app that allows a user to view available ite
 node bamazonCustomer.js
 ```
 
-![Bamazon Marketplace Customer](bamazonCustomer.PNG "Customer")
+![Bamazon Marketplace Customer](./images/bamazonCustomer.PNG "Customer")
 
 Bamazon Customer has only function, which is to order an item on the market. Selecting order will prompt the user to select the ID of the item they wish to purchase and choose how many units they wish to buy. Finally, they will be asked to confirm their order, and upon ordering they will see their purchase total.
 
@@ -68,7 +68,7 @@ This app has four primary functions:
 
 * Lists all items with an inventory lower than 10.
 
-![Bamazon Manager Low Inventory List](bamazonManager1.png)
+![Bamazon Manager Low Inventory List](bamazonManager1.PNG)
 
 ##### Add To Inventory
 
