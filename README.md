@@ -45,7 +45,7 @@ The customer facing version of this app that allows a user to view available ite
 node bamazonCustomer.js
 ```
 
-![Bamazon Marketplace Customer](/images/bamazonCustomer.png)
+![Bamazon Marketplace Customer](./images/bamazonCustomer.png)
 
 Bamazon Customer has only function, which is to order an item on the market. Selecting order will prompt the user to select the ID of the item they wish to purchase and choose how many units they wish to buy. Finally, they will be asked to confirm their order, and upon ordering they will see their purchase total.
 
@@ -68,7 +68,7 @@ This app has four primary functions:
 
 * Lists all items with an inventory lower than 10.
 
-![Bamazon Manager Low Inventory List](/images/bamazonManager1.png)
+![Bamazon Manager Low Inventory List](./images/bamazonManager1.png)
 
 ##### Add To Inventory
 
@@ -78,7 +78,7 @@ This app has four primary functions:
 
 * Prompts the user to add an item to the marketplace. Users are asked to enter the product's name, department, price, and quantity, followed by a confirmation prompt.
 
-![Bamazon Manager Add New Prodcut](/images/bamazonManager2.png)
+![Bamazon Manager Add New Prodcut](./images/bamazonManager2.png)
 
 ### Bamazon Supervisor
 
@@ -94,7 +94,7 @@ Bamazon Supervisor has two commands:
 
 * Lists departments in the marketplace that also have items stocked in that department. *Note* - The final column, Total Profit, is not a stored value and is created on the fly within the app by substracting the overhead costs from the department's combined sales. 
 
-![Bamazon Supervisor View Departments](/images/bamazonSupervisor.png)
+![Bamazon Supervisor View Departments](./images/bamazonSupervisor.png)
 
 ##### Create New Department
 
