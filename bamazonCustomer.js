@@ -33,7 +33,7 @@ function start() {
 }
 
 function displayMarket() {
-    var sqlString = "SELECT item_id AS Id, product_name AS Product, price AS Price FROM products";
+    var sqlString = "SELECT item_id AS ID, product_name AS Product, price AS Price FROM products";
     connection.query(sqlString, function(err, res) {
         if (err) throw err;
         console.table(res);
@@ -46,7 +46,7 @@ function makeOrder() {
         {
             name: "id",
             type: "input",
-            message: "What is id number for the item you are looking for?",
+            message: "What is the ID number for the item you are looking for?",
             validate: function(value) {
                 if (isNaN(value) === false) {
                     return true;
