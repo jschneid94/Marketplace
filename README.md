@@ -68,7 +68,7 @@ This app has four primary functions:
 
 * Lists all items with an inventory lower than 10.
 
-![Bamazon Manager Low Inventory List](images/bamazonManager1.png)
+![Bamazon Manager Low Inventory List](./images/bamazonManager1.png)
 
 ##### Add To Inventory
 
@@ -78,7 +78,7 @@ This app has four primary functions:
 
 * Prompts the user to add an item to the marketplace. Users are asked to enter the product's name, department, price, and quantity, followed by a confirmation prompt.
 
-![Bamazon Manager Add New Prodcut](images/bamazonManager2.png)
+![Bamazon Manager Add New Prodcut](/images/bamazonManager2.png)
 
 ### Bamazon Supervisor
 
